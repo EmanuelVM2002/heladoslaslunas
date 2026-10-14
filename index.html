@@ -16,7 +16,7 @@
   --wa:#25d366; --card:#fff; --r:24px; --shadow:0 12px 32px rgba(233,1,139,.16);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:78px}
+html{scroll-behavior:smooth;scroll-padding-top:78px;overflow-x:hidden;overflow-x:clip}
 body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden}
 h1,h2,h3,.brand{font-family:Fredoka,Inter,sans-serif;letter-spacing:.2px}
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
@@ -994,7 +994,7 @@ function openCart(){
     <button class="btn btn-wa" style="width:100%;margin-top:10px" ${cart.length?'':'disabled'} data-checkout>Finalizar pedido por WhatsApp</button>
   </div>`;
   if(prev)prev.replaceWith(d);else document.body.appendChild(d);
-  if(!prev)requestAnimationFrame(()=>d.classList.add('show'));
+  if(!prev){void d.offsetWidth;d.classList.add('show')}
   $('#overlay').classList.add('show');
   d.addEventListener('click',e=>{
     const q=e.target.closest('[data-q]');
@@ -1014,7 +1014,7 @@ function openCheckout(){
     <div class="field"><label for="co_note">Notas (opcional)</label><textarea id="co_note" rows="2" placeholder="Indicaciones, alergias…"></textarea></div>
     <div id="co_sum"></div>
     <div class="modal-actions"><button class="btn btn-ghost" data-cancel>Cancelar</button><button class="btn btn-wa" data-send>Enviar por WhatsApp 💬</button></div></div>`;
-  document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('show'));
+  document.body.appendChild(m);void m.offsetWidth;m.classList.add('show');
   const refresh=()=>{$('#co_sum').innerHTML=summaryHTML(totals())};refresh();
   m.addEventListener('input',e=>{if(e.target.id==='co_tel'){const d=digits(e.target.value);phone=d.length===10?d:'';refresh()}});
   m.addEventListener('click',e=>{
