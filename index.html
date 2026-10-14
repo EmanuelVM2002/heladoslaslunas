@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e9018b">
+<title>Helados Las Lunas · Un helado para cada luna</title>
+<meta name="description" content="Helados Las Lunas: copas, waffles, salpicones, malteadas y más. Pide por WhatsApp, arma tu helado y únete al Club Las Lunas.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#e9018b; --pink-d:#b8006e; --pink-l:#ff6fc0; --blue:#46c6f5; --blue-d:#1796cc;
+  --night:#2a0f4f; --night2:#4b1673; --cream:#fff5fa; --ink:#2d1236; --muted:#7d6585; --line:#f5d9ea;
+  --wa:#25d366; --card:#fff; --r:24px; --shadow:0 12px 32px rgba(233,1,139,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:78px}
+body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden}
+h1,h2,h3,.brand{font-family:Fredoka,Inter,sans-serif;letter-spacing:.2px}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.hidden{display:none!important}
+
+/* ---------- Botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:700;transition:.2s;white-space:nowrap;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--pink),var(--pink-l));color:#fff;box-shadow:0 8px 20px rgba(233,1,139,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(233,1,139,.45)}
+.btn-blue{background:var(--blue);color:#06394f;box-shadow:0 8px 20px rgba(70,198,245,.4)}
+.btn-blue:hover{transform:translateY(-2px)}
+.btn-wa{background:var(--wa);color:#fff;box-shadow:0 8px 20px rgba(37,211,102,.4)}
+.btn-wa:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--pink);color:var(--pink)}
+.btn-white{background:#fff;color:var(--pink)}
+.btn-white:hover{transform:translateY(-2px)}
+.btn-glass{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.btn-glass:hover{background:rgba(255,255,255,.22)}
+.btn-sm{padding:8px 16px;font-size:.86rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none!important}
+.icon-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1.5px solid var(--line);transition:.2s;position:relative;font-size:1.15rem}
+.icon-btn:hover{border-color:var(--pink);transform:scale(1.07)}
+.badge{position:absolute;top:-5px;right:-5px;background:var(--pink);color:#fff;font-size:.7rem;font-weight:700;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;padding:0 5px}
+.bump{animation:bump .5s}
+@keyframes bump{30%{transform:scale(1.3) rotate(-8deg)}60%{transform:scale(.92)}}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 5vw;background:rgba(255,245,250,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.35rem;font-weight:700;color:var(--pink);text-decoration:none;line-height:1}
+.brand img{width:46px;height:46px;border-radius:50%;box-shadow:0 4px 12px rgba(233,1,139,.3);transition:transform .5s}
+.brand:hover img{transform:rotate(360deg)}
+.brand small{display:block;font-size:.62rem;font-weight:600;color:var(--blue-d);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+.nav-links{display:flex;gap:4px;font-weight:600}
+.nav-links a{color:var(--muted);text-decoration:none;padding:8px 14px;border-radius:999px;transition:.2s;font-size:.95rem}
+.nav-links a:hover,.nav-links a.on{color:#fff;background:var(--pink)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.menu-toggle{display:none}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;padding:56px 5vw 110px;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;
+  background:radial-gradient(circle at 76% 45%,#ff49ae 0,#e9018b 42%,#b8006e 100%)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);pointer-events:none}
+.hero::before{width:760px;height:760px;right:-170px;top:-130px}
+.hero::after{width:680px;height:680px;right:-130px;top:-90px;border-color:rgba(255,255,255,.2)}
+.hero>*{position:relative;z-index:2}
+.star{position:absolute;z-index:1;color:#fff;animation:twinkle 3s ease-in-out infinite;pointer-events:none;user-select:none}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.45);padding:7px 16px;border-radius:999px;font-weight:600;font-size:.86rem;backdrop-filter:blur(6px)}
+.pill.light{background:#fff;color:var(--pink);border-color:var(--line)}
+.hero h1{font-size:clamp(2.6rem,6.2vw,5rem);line-height:1.02;font-weight:700;margin:18px 0 16px;text-shadow:0 4px 0 rgba(0,0,0,.12)}
+.hero h1 em{font-style:normal;color:var(--blue);-webkit-text-stroke:9px #fff;paint-order:stroke fill;text-shadow:0 6px 0 rgba(0,0,0,.16);display:inline-block;transform:rotate(-3deg)}
+.hero p.lead{font-size:1.12rem;line-height:1.6;max-width:490px;opacity:.95}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.moon-chip{margin-top:30px;display:inline-flex;align-items:center;gap:14px;background:rgba(42,15,79,.38);border:1.5px solid rgba(255,255,255,.3);border-radius:22px;padding:12px 18px;cursor:pointer;transition:.2s;text-align:left;color:#fff}
+.moon-chip:hover{transform:translateY(-3px);background:rgba(42,15,79,.55)}
+.moon-chip .m{font-size:2.5rem;line-height:1;animation:float 5s ease-in-out infinite}
+.moon-chip small{display:block;opacity:.8;font-size:.78rem}
+.moon-chip b{font-family:Fredoka;font-size:1.1rem}
+.logo-stage{position:relative;display:grid;place-items:center;height:min(500px,92vw)}
+.logo-wrap{transform:translate(var(--px,0),var(--py,0));transition:transform .15s}
+.logo-big{width:min(430px,78vw);border-radius:50%;box-shadow:0 30px 70px rgba(42,15,79,.45),0 0 0 8px rgba(255,255,255,.18);animation:float 5s ease-in-out infinite;cursor:pointer}
+.logo-big.spin{animation:spinpop 1s cubic-bezier(.4,1.6,.5,1)}
+@keyframes spinpop{0%{transform:rotate(0) scale(1)}50%{transform:rotate(200deg) scale(1.08)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:70px;display:block;z-index:3}
+
+/* ---------- Cinta ---------- */
+.ribbon{background:var(--blue);color:#06394f;overflow:hidden;white-space:nowrap;padding:14px 0;font-family:Fredoka;font-weight:600;font-size:1.25rem;transform:rotate(-1.2deg);margin:-14px -10px 0;position:relative;z-index:4;box-shadow:0 6px 18px rgba(70,198,245,.4)}
+.ribbon div{display:inline-block;animation:marq 38s linear infinite}
+.ribbon:hover div{animation-play-state:paused}
+.ribbon span{margin:0 22px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- Secciones ---------- */
+section{padding:84px 5vw}
+.sec-head{text-align:center;margin-bottom:34px}
+.sec-head h2{font-size:clamp(2rem,4vw,3.1rem);color:var(--pink)}
+.sec-head p{color:var(--muted);margin-top:8px;max-width:600px;margin-inline:auto}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- Menú ---------- */
+#menu{background:#fff}
+.tools{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.search{display:flex;align-items:center;gap:8px;background:var(--cream);border:1.5px solid var(--line);border-radius:999px;padding:0 16px;min-width:min(320px,100%)}
+.search input{border:0;background:none;outline:0;padding:11px 0;width:100%}
+.search:focus-within{border-color:var(--pink);box-shadow:0 0 0 4px rgba(233,1,139,.12)}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:34px;max-width:1100px;margin-inline:auto}
+.chip{padding:8px 18px;border-radius:999px;background:var(--cream);border:1.5px solid var(--line);font-weight:600;font-size:.92rem;transition:.2s}
+.chip:hover{border-color:var(--pink);color:var(--pink)}
+.chip.active{background:var(--pink);color:#fff;border-color:var(--pink);box-shadow:0 6px 16px rgba(233,1,139,.3)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px;max-width:1280px;margin:0 auto}
+.product{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;position:relative;will-change:transform;border:1.5px solid var(--line);animation:fadeup .5s both;display:flex;flex-direction:column}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}}
+.product:hover{box-shadow:0 22px 44px rgba(233,1,139,.25)}
+.product .pic{height:220px;border-radius:18px;display:grid;place-items:center;font-size:5rem;margin-bottom:14px;position:relative;overflow:hidden;background:linear-gradient(160deg,#fff,#f6f1f8)}
+.product .pic img{position:absolute;inset:0;height:100%;width:100%;object-fit:contain;padding:6px;background:linear-gradient(160deg,#fff,#f6f1f8);transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.product:hover .pic img{transform:scale(1.08) rotate(-1.5deg)}
+.product .emo{transition:transform .35s cubic-bezier(.3,1.7,.5,1);display:block}
+.product:hover .emo{transform:scale(1.2) rotate(-8deg)}
+.product h3{font-size:1.2rem;line-height:1.15}
+.product p{color:var(--muted);font-size:.86rem;margin:6px 0 14px;line-height:1.45;flex:1}
+.product .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{font-family:Fredoka;font-size:1.3rem;font-weight:600;color:var(--pink)}
+.tag{position:absolute;top:12px;left:12px;background:var(--blue);border-radius:999px;font-size:.72rem;font-weight:700;padding:4px 11px;color:#06394f;z-index:2;box-shadow:0 4px 10px rgba(70,198,245,.5)}
+.fav{position:absolute;top:10px;right:10px;z-index:2;width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12);transition:.2s;font-size:1.05rem;filter:grayscale(1);opacity:.75}
+.fav:hover{transform:scale(1.15)}
+.fav.on{filter:none;opacity:1;animation:bump .5s}
+.ptable{display:grid;gap:4px;margin:6px 0 14px;flex:1}
+.ptable span{display:flex;justify-content:space-between;background:var(--cream);padding:6px 12px;border-radius:10px;font-size:.88rem;font-weight:600}
+.ptable b{color:var(--pink);font-family:Fredoka}
+.empty{text-align:center;color:var(--muted);padding:40px;grid-column:1/-1}
+
+/* ---------- Arma tu helado ---------- */
+#arma{background:radial-gradient(circle at 15% 0%,var(--night2),var(--night) 65%);color:#fff;position:relative;overflow:hidden}
+#arma .sec-head h2{color:#fff}
+#arma .sec-head p{color:#cdb8e6}
+.builder{display:grid;grid-template-columns:minmax(300px,.85fr) 1.15fr;gap:34px;max-width:1120px;margin:0 auto;align-items:start;position:relative;z-index:2}
+.pv{position:sticky;top:92px;border-radius:38px;padding:16px 16px 22px;background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border:1.5px solid rgba(255,255,255,.25);backdrop-filter:blur(10px);text-align:center;overflow:hidden}
+.pv-stage{position:relative;border-radius:28px;background:radial-gradient(circle at 50% 62%,rgba(255,111,192,.55),rgba(233,1,139,.18) 45%,transparent 70%),linear-gradient(180deg,rgba(42,15,79,.55),rgba(42,15,79,.1));padding:10px 0 0}
+.pv-stage svg{width:100%;max-width:310px;height:auto;margin:0 auto;display:block;filter:drop-shadow(0 16px 16px rgba(0,0,0,.3))}
+.pv-moon{position:absolute;top:12px;right:16px;font-size:2.2rem;animation:float 6s ease-in-out infinite}
+.pv-star{position:absolute;color:#fff;font-size:1.1rem;animation:twinkle 3s infinite}
+.pv-label{margin-top:12px;font-family:Fredoka;font-size:1.15rem;min-height:1.5em}
+.pv-sub{font-size:.82rem;color:#cdb8e6;min-height:2.4em;padding:0 8px}
+.drop{transform-box:fill-box;transform-origin:50% 100%;animation:dropin .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dropin{from{transform:translateY(-90px) scale(.75);opacity:0}}
+.panel-b{display:grid;gap:18px}
+.cs{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:26px;padding:20px 20px 22px}
+.cs h3{font-size:1.15rem;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.cs h3 i{font-style:normal;background:linear-gradient(135deg,var(--blue),#8be0ff);color:#06394f;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.92rem;font-weight:700;flex-shrink:0}
+.cs .sub{font-size:.82rem;color:#cdb8e6;margin:0 0 14px 40px}
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.vopt{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px 10px;border-radius:20px;background:rgba(255,255,255,.08);border:2px solid transparent;transition:.2s;color:#fff}
+.vopt svg{width:100%;height:78px}
+.vopt b{font-family:Fredoka;font-size:.98rem}
+.vopt small{font-size:.72rem;color:#cdb8e6}
+.vopt:hover{background:rgba(255,255,255,.16);transform:translateY(-3px)}
+.vopt.on{border-color:var(--blue);background:rgba(70,198,245,.18);box-shadow:0 0 0 4px rgba(70,198,245,.15)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:10px}
+.fopt{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 8px;border-radius:18px;background:rgba(255,255,255,.08);border:2px solid transparent;transition:.2s;color:#fff;font-size:.8rem;font-weight:600}
+.fopt svg{width:52px;height:52px}
+.fopt:hover{background:rgba(255,255,255,.18);transform:translateY(-3px) rotate(-2deg)}
+.fopt.on{border-color:var(--pink-l);background:rgba(233,1,139,.25)}
+.fopt .n{position:absolute;top:4px;right:6px;background:var(--pink);color:#fff;border-radius:999px;min-width:20px;height:20px;font-size:.72rem;display:grid;place-items:center;padding:0 5px;font-weight:700;animation:pop .3s}
+@keyframes pop{from{transform:scale(0)}}
+.chosen{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;min-height:34px;align-items:center}
+.chosen span{background:#fff;color:var(--ink);padding:5px 6px 5px 12px;border-radius:999px;font-weight:600;font-size:.84rem;display:inline-flex;align-items:center;gap:6px}
+.chosen span em{font-style:normal;color:var(--pink);font-family:Fredoka}
+.chosen button{width:20px;height:20px;border-radius:50%;background:var(--pink);color:#fff;font-size:.68rem;display:grid;place-items:center}
+.chosen .ph{color:#cdb8e6;font-size:.84rem}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.2);font-weight:600;font-size:.9rem;transition:.2s;color:#fff}
+.opt:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+.opt.on{background:var(--pink);border-color:var(--pink);box-shadow:0 6px 16px rgba(233,1,139,.5)}
+.opt small{opacity:.8;font-weight:500}
+.dot{width:16px;height:16px;border-radius:50%;display:inline-block;border:2px solid rgba(255,255,255,.7);background:var(--bg)}
+.b-total{background:linear-gradient(135deg,rgba(233,1,139,.35),rgba(124,92,255,.3));border:1.5px solid rgba(255,255,255,.25);border-radius:26px;padding:18px 20px}
+.b-lines{display:grid;gap:4px;font-size:.88rem;color:#e6d8f5;margin-bottom:12px}
+.b-lines div{display:flex;justify-content:space-between;gap:10px}
+.b-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.b-row b{font-family:Fredoka;font-size:2.1rem;line-height:1}
+.b-row small{color:#cdb8e6;display:block}
+.b-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ---------- Club ---------- */
+#club{background:linear-gradient(135deg,#e3f6ff,#ffe6f4)}
+.club{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;max-width:1100px;margin:0 auto;align-items:stretch}
+.ccard{background:linear-gradient(145deg,#ff49ae,#e9018b 50%,#b8006e);color:#fff;border-radius:34px;padding:28px;box-shadow:0 24px 50px rgba(233,1,139,.35);position:relative;overflow:hidden}
+.ccard::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;border:2px solid rgba(255,255,255,.3);right:-90px;top:-100px}
+.ccard::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;border:2px solid rgba(255,255,255,.2);right:-60px;top:-70px}
+.ccard>*{position:relative;z-index:1}
+.ccard .top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.ccard .top img{width:56px;height:56px;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.4)}
+.ccard .top b{font-family:Fredoka;font-size:1.4rem;display:block;line-height:1.1}
+.ccard .top small{opacity:.85}
+.moons{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:8px 0 14px}
+.moon{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:clamp(1.6rem,5vw,2.4rem);background:rgba(255,255,255,.14);border:2px dashed rgba(255,255,255,.5);transition:.3s}
+.moon span{opacity:.35;filter:grayscale(1)}
+.moon.on{background:rgba(255,255,255,.95);border:2px solid #fff;box-shadow:0 0 22px rgba(255,236,150,.9);animation:glow 2.6s ease-in-out infinite}
+.moon.on span{opacity:1;filter:none}
+@keyframes glow{50%{box-shadow:0 0 34px rgba(255,236,150,1);transform:scale(1.06)}}
+.cstat{font-family:Fredoka;font-size:1.25rem;margin-bottom:4px}
+.cmsg{font-size:.9rem;opacity:.95;min-height:2.6em;line-height:1.4}
+.cform{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.cform input{flex:1;min-width:150px;padding:11px 16px;border-radius:999px;border:0;outline:0;background:rgba(255,255,255,.95);color:var(--ink)}
+.reward{display:none;margin-top:12px;background:#fff;color:var(--ink);border-radius:18px;padding:12px 16px;font-weight:600;box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.reward.show{display:block;animation:pop .5s}
+.rules{display:grid;gap:14px;align-content:center}
+.rule{display:flex;gap:16px;align-items:center;background:#fff;border-radius:24px;padding:18px 20px;box-shadow:var(--shadow);transition:.25s}
+.rule:hover{transform:translateX(6px)}
+.rule i{font-style:normal;font-size:2.2rem;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:var(--cream);flex-shrink:0}
+.rule h3{font-size:1.08rem;color:var(--pink)}
+.rule p{font-size:.88rem;color:var(--muted);margin-top:2px;line-height:1.4}
+.fine{font-size:.76rem;color:var(--muted);margin-top:4px}
+
+/* ---------- Ubicación ---------- */
+#donde{background:#fff;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center}
+#donde h2{font-size:clamp(2rem,4vw,3rem);color:var(--pink);margin:12px 0}
+#donde .lead{color:var(--muted);line-height:1.6;margin-bottom:18px}
+.dir-btns{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.steps{list-style:none;display:grid;gap:10px;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:center;background:var(--cream);border-radius:16px;padding:12px 16px;font-weight:600;font-size:.92rem}
+.steps li::before{content:counter(s);background:var(--blue);color:#06394f;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:Fredoka;flex-shrink:0}
+.mapbox{border-radius:32px;overflow:hidden;box-shadow:0 20px 50px rgba(233,1,139,.25);border:6px solid #fff;outline:2px solid var(--pink);aspect-ratio:4/3;background:#f3e6ef;position:relative}
+.mapbox iframe{width:100%;height:100%;border:0;display:block}
+.mapbox .pin{position:absolute;left:12px;bottom:12px;background:#fff;border-radius:999px;padding:6px 14px;font-weight:700;font-size:.82rem;color:var(--pink);box-shadow:0 6px 16px rgba(0,0,0,.2);text-decoration:none}
+
+/* ---------- Reservas ---------- */
+#reservar{background:var(--cream);display:grid;grid-template-columns:1fr 1.1fr;gap:44px;align-items:center}
+#reservar h2{font-size:clamp(2rem,4vw,3rem);color:var(--pink);margin:12px 0}
+#reservar .lead{color:var(--muted);line-height:1.6;margin-bottom:20px}
+#reservar ul{list-style:none;display:grid;gap:12px;font-weight:600}
+#reservar li{display:flex;gap:12px;align-items:center;background:#fff;padding:12px 16px;border-radius:16px}
+#reservar .form{background:#fff;border-radius:28px;padding:30px;box-shadow:var(--shadow);border:1.5px solid var(--line)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:.82rem;font-weight:700;color:var(--muted)}
+.field input,.field select,.field textarea{padding:11px 14px;border-radius:14px;border:1.5px solid var(--line);background:#fff;outline:0;transition:.2s;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--pink);box-shadow:0 0 0 4px rgba(233,1,139,.12)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* ---------- Por qué ---------- */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;background:linear-gradient(135deg,#ffe3f2,#e3f6ff)}
+.feat{background:#fff;border-radius:var(--r);padding:30px 24px;text-align:center;box-shadow:var(--shadow);transition:.3s}
+.feat:hover{transform:translateY(-8px) rotate(-1deg)}
+.feat i{font-style:normal;font-size:3rem;display:block;margin-bottom:10px;transition:transform .4s cubic-bezier(.3,1.7,.5,1)}
+.feat:hover i{transform:scale(1.25) rotate(10deg)}
+.feat p{color:var(--muted);font-size:.92rem;margin-top:6px;line-height:1.5}
+
+/* ---------- Promo ---------- */
+.promo{margin:0 5vw;border-radius:34px;padding:50px;background:linear-gradient(120deg,var(--pink-d),var(--pink) 55%,var(--pink-l));color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+.promo h2{font-size:clamp(1.8rem,3.5vw,2.8rem)}
+.promo .big{position:absolute;right:30px;top:-24px;font-size:10rem;opacity:.2;animation:float 6s ease-in-out infinite}
+.promo>*{position:relative}
+
+/* ---------- Footer ---------- */
+footer.site{background:var(--night);color:#d9c7ee;margin-top:70px;padding:50px 5vw 30px}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px;max-width:1100px;margin:0 auto 26px}
+.foot img{width:90px;border-radius:50%;margin-bottom:12px}
+.foot h4{font-family:Fredoka;color:#fff;margin-bottom:10px;font-size:1.1rem}
+.foot p,.foot a{color:#d9c7ee;display:block;margin:6px 0;font-size:.92rem;text-decoration:none}
+.foot a:hover{color:var(--blue)}
+.credit{text-align:center;font-size:.8rem;margin-top:12px;color:#cdb8e6}
+.credit a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px dashed var(--blue)}
+.credit a:hover{color:#fff;border-color:#fff}
+.copy{text-align:center;font-size:.82rem;opacity:.7;border-top:1px solid rgba(255,255,255,.15);padding-top:20px}
+
+/* ---------- Drawer / Modal ---------- */
+.overlay{position:fixed;inset:0;background:rgba(42,15,79,.5);backdrop-filter:blur(4px);z-index:90;opacity:0;pointer-events:none;transition:.25s}
+.overlay.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:#fff;z-index:100;transform:translateX(100%);transition:.3s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.2)}
+.drawer.show{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;background:var(--pink);color:#fff}
+.drawer header h3{font-size:1.4rem}
+.drawer header .icon-btn{background:rgba(255,255,255,.2);border-color:transparent;color:#fff}
+.drawer .body{flex:1;overflow:auto;padding:12px 22px}
+.drawer .foot-d{padding:16px 22px;border-top:1px solid var(--line);background:var(--cream)}
+.cart-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.cart-item .e{font-size:2rem;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;background:#ffe3f2;flex-shrink:0;overflow:hidden}
+.cart-item .e img{width:100%;height:100%;object-fit:contain;background:#fff}
+.cart-item .info{flex:1;min-width:0}.cart-item .info small{color:var(--muted);display:block;line-height:1.3}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:50%;background:#fff;border:1.5px solid var(--line);font-weight:700}
+.qty button:hover{border-color:var(--pink);color:var(--pink)}
+.sum-row{display:flex;justify-content:space-between;margin:6px 0;gap:10px}
+.sum-row.total{font-family:Fredoka;font-size:1.45rem;font-weight:600;margin-top:12px;color:var(--pink)}
+.sum-row.ok{color:#0f8f70;font-weight:600}
+.note{font-size:.8rem;background:#fff;border:1.5px dashed var(--pink-l);border-radius:14px;padding:8px 12px;margin:8px 0;color:var(--ink);line-height:1.4}
+.modal{position:fixed;inset:0;display:grid;place-items:center;z-index:110;pointer-events:none;padding:16px}
+.modal>div{background:#fff;border-radius:26px;padding:28px;width:min(520px,100%);max-height:92vh;overflow:auto;transform:scale(.92);opacity:0;transition:.25s;pointer-events:none}
+.modal.show>div{transform:none;opacity:1;pointer-events:auto}
+.modal h3{font-size:1.6rem;margin-bottom:16px;color:var(--pink)}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px;flex-wrap:wrap}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;padding:11px;border-radius:14px;border:1.5px solid var(--line);font-weight:700;background:#fff;transition:.2s}
+.seg button.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:92vw}
+.toast{background:var(--night);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:pop .3s}
+.spark{position:fixed;pointer-events:none;z-index:300;font-size:14px;user-select:none}
+.confetti{position:fixed;pointer-events:none;z-index:300;width:9px;height:14px;border-radius:2px}
+.fab{position:fixed;right:18px;bottom:18px;z-index:55;width:54px;height:54px;border-radius:50%;background:var(--pink);color:#fff;font-size:1.5rem;box-shadow:0 10px 24px rgba(233,1,139,.5);display:grid;place-items:center;transition:.3s;opacity:0;transform:scale(.5);pointer-events:none}
+.fab.show{opacity:1;transform:none;pointer-events:auto}
+.wa-fab{position:fixed;left:18px;bottom:18px;z-index:55;display:flex;align-items:center;gap:8px;background:var(--wa);color:#fff;border-radius:999px;padding:13px 18px;font-weight:700;text-decoration:none;box-shadow:0 10px 24px rgba(37,211,102,.5);transition:.2s}
+.wa-fab:hover{transform:translateY(-3px)}
+.wa-fab svg{width:24px;height:24px;fill:#fff}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1060px){.nav-links a{padding:8px 10px;font-size:.88rem}}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:40px}
+  .hero p.lead{margin-inline:auto}.hero-cta{justify-content:center}
+  .logo-stage{height:auto;padding:20px 0}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#fff;padding:12px 5vw 18px;border-bottom:1px solid var(--line);box-shadow:0 20px 30px rgba(0,0,0,.08)}
+  .nav-links.open{display:flex}
+  .menu-toggle{display:grid}
+  .builder,.club,#donde,#reservar{grid-template-columns:1fr}
+  .pv{position:static}
+  .pv-stage svg{max-width:250px}
+  .foot{grid-template-columns:1fr}
+  .promo{padding:30px}
+  section{padding:64px 5vw}
+}
+@media(max-width:520px){.two{grid-template-columns:1fr}.brand small{display:none}.vgrid{grid-template-columns:repeat(2,1fr)}.wa-fab span{display:none}.wa-fab{padding:14px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- Degradados y patrones compartidos por los dibujos SVG (se rellenan por JS) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="gdefs"></defs></svg>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#inicio"><img src="img/logo.png" alt="Logo Helados Las Lunas"><div>Las Lunas<small>Helados</small></div></a>
+  <div class="nav-links" id="links">
+    <a href="#menu">Menú</a><a href="#arma">Arma tu helado</a><a href="#club">Club</a><a href="#donde">Ubicación</a><a href="#reservar">Reservas</a>
+  </div>
+  <div class="nav-actions">
+    <button class="icon-btn" id="cartBtn" aria-label="Abrir pedido">🛒<span class="badge hidden" id="cartCount">0</span></button>
+    <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Menú">☰</button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="inicio">
+  <span class="star" style="top:12%;left:6%;font-size:2rem">✦</span>
+  <span class="star" style="top:30%;left:46%;font-size:1.2rem;animation-delay:-1s">✦</span>
+  <span class="star" style="top:70%;left:8%;font-size:1.6rem;animation-delay:-2s">✦</span>
+  <span class="star" style="top:8%;right:10%;font-size:1.4rem;animation-delay:-.5s;color:#bfeaff">✦</span>
+  <span class="star" style="bottom:22%;right:5%;font-size:2.2rem;animation-delay:-1.5s;color:#bfeaff">✦</span>
+  <span class="star" style="bottom:26%;left:42%;font-size:1rem;animation-delay:-2.5s">✦</span>
+
+  <div>
+    <span class="pill" id="openPill">🌙 …</span>
+    <h1>Un helado para cada <em>luna</em></h1>
+    <p class="lead">Copas, waffles, salpicones, malteadas y mucho más. Pídelo por WhatsApp, ármalo a tu gusto y gana lunas con cada compra.</p>
+    <div class="hero-cta">
+      <a class="btn btn-white" href="#menu">Ver el menú 🍧</a>
+      <a class="btn btn-blue" href="#arma">Arma tu helado 🌙</a>
+    </div>
+    <button class="moon-chip" id="moonChip" aria-label="Antojo lunar de hoy">
+      <span class="m" id="moonEmoji">🌕</span>
+      <span><small id="moonPhase">Fase de hoy</small><b id="moonFlavor">Antojo lunar</b><small>Toca para agregarlo a tu pedido</small></span>
+    </button>
+  </div>
+
+  <div class="logo-stage" id="stage">
+    <div class="logo-wrap" id="logoWrap"><img class="logo-big" id="logoBig" src="img/logo.png" alt="Helados Las Lunas" title="¡Tócame!"></div>
+  </div>
+
+  <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,35 C240,80 480,0 720,35 C960,70 1200,10 1440,35 L1440,70 L0,70Z" fill="#fff"/></svg>
+</header>
+
+<div class="ribbon" aria-hidden="true"><div id="marq"></div></div>
+
+<!-- ===== MENÚ ===== -->
+<section id="menu">
+  <div class="sec-head reveal"><h2>Nuestro menú</h2><p>Elige, toca ❤️ en tus favoritos y agrégalos a tu pedido. Al final lo enviamos por WhatsApp.</p></div>
+  <div class="tools reveal"><label class="search">🔍<input id="q" type="search" placeholder="Buscar en el menú…" aria-label="Buscar en el menú"></label></div>
+  <div class="chips reveal" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ===== ARMA TU HELADO ===== -->
+<section id="arma">
+  <span class="star" style="top:6%;left:5%;font-size:1.6rem">✦</span>
+  <span class="star" style="top:20%;right:6%;font-size:2rem;animation-delay:-1s;color:#bfeaff">✦</span>
+  <span class="star" style="bottom:12%;left:12%;font-size:1.2rem;animation-delay:-2s">✦</span>
+  <span class="star" style="bottom:30%;right:14%;font-size:1.4rem;animation-delay:-.5s">✦</span>
+  <div class="sec-head reveal"><h2>Arma tu helado 🌙</h2><p>Elige el envase, los sabores, la salsa y las adiciones. El dibujo se arma mientras eliges, con los precios de nuestra carta.</p></div>
+  <div class="builder reveal" id="builder"></div>
+</section>
+
+<!-- ===== CLUB ===== -->
+<section id="club">
+  <div class="sec-head reveal"><h2>Club Las Lunas 🌙</h2><p>Compra por esta página, completa tus lunas y gana premios. ¡Tu primera compra ya tiene descuento!</p></div>
+  <div class="club">
+    <div class="ccard reveal" id="clubCard"></div>
+    <div class="rules reveal">
+      <div class="rule"><i>🎉</i><div><h3>Primera compra: 10% de descuento</h3><p>Se aplica solo en tu primer pedido hecho desde la página.</p></div></div>
+      <div class="rule"><i>🌙</i><div><h3>Cada compra suma una luna</h3><p>Los pedidos desde <b id="minCompra"></b> completan una luna de tu tarjeta.</p></div></div>
+      <div class="rule"><i>🎁</i><div><h3>5 lunas = premio</h3><p id="premioTxt"></p></div></div>
+      <p class="fine">Tu tarjeta se identifica con tu celular y se guarda en este dispositivo. Al recibir tu pedido, el equipo confirma tus lunas y premios por WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== UBICACIÓN ===== -->
+<section id="donde">
+  <div class="reveal">
+    <span class="pill light">📍 Dónde estamos</span>
+    <h2>Ven a visitarnos</h2>
+    <p class="lead" id="dirTxt">Encuéntranos en el mapa y llega con tu navegador favorito. ¿Prefieres quedarte en casa? Te llevamos el helado.</p>
+    <div class="dir-btns">
+      <a class="btn btn-primary" id="goMaps" target="_blank" rel="noopener">🧭 Cómo llegar</a>
+      <a class="btn btn-blue" id="goWaze" target="_blank" rel="noopener">🚗 Abrir en Waze</a>
+      <a class="btn btn-ghost" id="viewMaps" target="_blank" rel="noopener">🗺️ Ver en Google Maps</a>
+    </div>
+    <ol class="steps">
+      <li>Toca «Cómo llegar» y se abre Google Maps con la ruta.</li>
+      <li>Tu ubicación actual se usa como punto de partida.</li>
+      <li>¡Sigue la ruta y disfruta tu helado bajo la luna!</li>
+    </ol>
+  </div>
+  <div class="mapbox reveal"><iframe id="mapFrame" title="Mapa de Helados Las Lunas" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><a class="pin" id="pinLink" target="_blank" rel="noopener">📍 Helados Las Lunas</a></div>
+</section>
+
+<!-- ===== RESERVAS ===== -->
+<section id="reservar">
+  <div class="reveal">
+    <span class="pill light">📅 Reservas</span>
+    <h2>Reserva tu mesa y celebra con nosotros</h2>
+    <p class="lead">Cumpleaños, citas o reuniones de amigos. Déjanos tus datos y te confirmamos por WhatsApp.</p>
+    <ul><li>🎂 Celebraciones y cumpleaños</li><li>👨‍👩‍👧 Mesas familiares</li><li>🏢 Eventos y reuniones de grupo</li></ul>
+  </div>
+  <form class="form reveal" id="resForm">
+    <div class="two"><div class="field"><label for="rs_n">Nombre</label><input id="rs_n" required placeholder="Tu nombre"></div>
+    <div class="field"><label for="rs_t">Teléfono</label><input id="rs_t" required inputmode="tel" placeholder="300 000 0000"></div></div>
+    <div class="two"><div class="field"><label for="rs_d">Fecha</label><input id="rs_d" type="date" required></div>
+    <div class="field"><label for="rs_h">Hora</label><input id="rs_h" type="time" required value="16:00"></div></div>
+    <div class="two"><div class="field"><label for="rs_p">Personas</label><input id="rs_p" type="number" min="1" max="30" value="2" required></div>
+    <div class="field"><label for="rs_o">Ocasión</label><select id="rs_o"><option>Amigos</option><option>Familiar</option><option>Cumpleaños</option><option>Cita</option><option>Evento</option></select></div></div>
+    <div class="field"><label for="rs_x">Notas (opcional)</label><textarea id="rs_x" rows="2" placeholder="Alergias, decoración, etc."></textarea></div>
+    <button class="btn btn-wa" style="width:100%">Reservar por WhatsApp 💬</button>
+  </form>
+</section>
+
+<!-- ===== POR QUÉ ===== -->
+<section class="features">
+  <div class="feat reveal"><i>💬</i><h3>Pide por WhatsApp</h3><p>Arma tu pedido aquí y nos llega listo, con todo lo que elegiste.</p></div>
+  <div class="feat reveal"><i>🧇</i><h3>Copas y waffles</h3><p>Postres de la casa para compartir o para ti solo.</p></div>
+  <div class="feat reveal"><i>🧒</i><h3>Para los peques</h3><p>Figuras de helado: Mickey, Peppa Pig, Pinocho y más.</p></div>
+  <div class="feat reveal"><i>🌙</i><h3>Club Las Lunas</h3><p>Descuento en tu primera compra y premios por fidelidad.</p></div>
+</section>
+
+<div class="promo reveal" id="promo">
+  <span class="big">🌙</span>
+  <div><h2>¡Tu primera compra tiene 10% de descuento! ✨</h2><p style="margin-top:8px;opacity:.95">Haz tu pedido desde la página y el descuento se aplica automáticamente.</p></div>
+  <button class="btn btn-white" onclick="document.getElementById('menu').scrollIntoView()">¡Quiero mi helado!</button>
+</div>
+
+<footer class="site" id="contacto">
+  <div class="foot">
+    <div><img src="img/logo.png" alt="Helados Las Lunas"><p>Un helado para cada luna 🌙</p></div>
+    <div><h4>Visítanos</h4><div id="footInfo"></div></div>
+    <div><h4>Escríbenos</h4><div id="footLinks"></div></div>
+  </div>
+  <div class="copy">© <span id="yr"></span> Helados Las Lunas · Hecho con 💖 y mucho helado</div>
+  <div class="credit">Página creada por <a href="https://sonetix.emanuelvillada10.workers.dev/" target="_blank" rel="noopener">Sonetix</a></div>
+</footer>
+
+<a class="wa-fab" id="waFab" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><svg viewBox="0 0 32 32"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.4.7 4.7 2 6.6L3 29l7.100-2.200a13 13 0 0 0 5.900 1.400c7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.200 1.300 1.400-4-.3-.4a10.200 10.200 0 0 1-1.600-5.500C5.600 9.900 10.300 5.300 16 5.300s10.400 4.600 10.400 10.200S21.700 25.800 16 25.800zm5.700-7.600c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6-.100-.2-.7-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.800s1.200 3.300 1.400 3.500c.2.200 2.400 3.700 5.800 5.100.8.3 1.400.5 1.900.7.8.3 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg><span>Escríbenos</span></a>
+<button class="fab" id="fab" aria-label="Subir">↑</button>
+<div class="overlay" id="overlay"></div>
+<div class="toast-wrap" id="toasts"></div>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN — edita aquí los datos del negocio
+   ========================================================= */
+const CONFIG = {
+  whatsapp: '573218960821',                                   // los pedidos y reservas llegan a este WhatsApp
+  instagram: 'https://instagram.com/heladoslaslunas',
+  facebook: 'https://www.facebook.com/search/top?q=Helados%20Las%20Lunas',
+  mapsCorto: 'https://maps.app.goo.gl/icD5Li7rEALWKfA7A',    // enlace original del mapa
+  lat: 6.287085, lng: -75.609422,                             // ubicación (sacada del enlace del mapa)
+  direccion: '',                                              // Ej: 'Calle 10 # 5-20' (opcional)
+  horarioTexto: '',                                           // Ej: 'Todos los días · 12:00 m a 10:00 pm' (opcional)
+  abre: null, cierra: null,                                   // Ej: abre: 12, cierra: 22 → muestra «Abierto ahora» (opcional)
+  domicilio: null                                             // Ej: 3000. Con null se confirma el valor por WhatsApp
+};
+/* Club Las Lunas (fidelización) */
+const CLUB = {
+  meta: 5,                 // lunas necesarias para el premio
+  minCompra: 10000,        // compra mínima (COP) para que el pedido sume una luna
+  primeraPct: 10,          // % de descuento en la primera compra por la página
+  premio: 'Cucurucho de 1 bola', premioValor: 4500
+};
+
+/* =========================================================
+   MENÚ (nombres, descripciones y precios de la carta)
+   ========================================================= */
+const CATS = ['Helados','Copas','Waffles','Salpicones','Ensaladas','Fresas con crema','Infantiles','Malteadas','Obleas y solteritas','Refrescantes','Adiciones'];
+const I = (id,cat,name,price,desc,img='',tag='',emoji='🍨')=>({id,cat,name,price,desc,img,tag,emoji});
+const PRODUCTS = [
+  {id:'v-vaso',cat:'Helados',vessel:'vaso',name:'Vasos',emoji:'🍨',img:'',desc:'Tu helado en vaso. Arma el tuyo con los sabores que quieras.'},
+  {id:'v-concha',cat:'Helados',vessel:'concha',name:'Conchas',emoji:'🥣',img:'concha',desc:'Servido en concha de barquillo. Arma el tuyo.'},
+  {id:'v-cono',cat:'Helados',vessel:'cono',name:'Conos',emoji:'🍦',img:'',desc:'El clásico cono, de 1 o 2 bolas.'},
+  {id:'v-cucurucho',cat:'Helados',vessel:'cucurucho',name:'Cucuruchos',emoji:'🍦',img:'cucurucho',desc:'Cucurucho crocante con las bolas que quieras.'},
+
+  I('copa-super-luna','Copas','Copa Super Luna',25000,'Tres sabores de helado, brownie, chantilly, fresa, barquillo, salsa al gusto y variedad de topping.','copa-super-luna','Especial de la casa'),
+  I('copa-milo','Copas','Copa Milo',16000,'Dos sabores de helado, chantilly, barquillo, galleta milo y variedad de topping.','copa-milo'),
+  I('copa-oreo','Copas','Copa Oreo',16000,'Dos sabores de helado, chantilly, barquillo, salsa de su preferencia y variedad de topping.','copa-oreo'),
+  I('copa-durazno','Copas','Copa Durazno',16000,'Un sabor de helado, durazno, chantilly, leche condensada, queso, barquillo, cereza y galleta minichips.','copa-durazno'),
+  I('copa-queso','Copas','Copa Queso',15500,'Dos sabores de helado, queso, chantilly, barquillo, cereza, salsa al gusto y galleta minichips.','copa-queso'),
+  I('copa-ponque','Copas','Copa Ponqué',19000,'Un sabor de helado, ponqué, crema de whisky, chantilly, barquillo, salsa de su preferencia y chokis.','copa-ponque'),
+  I('copa-ponque-sl','Copas','Copa Ponqué sin licor',16000,'Un sabor de helado, ponqué, chantilly, barquillo, salsa de su preferencia y chokis. Sin licor.','copa-ponque'),
+
+  I('waffle-bono','Waffles','Waffle pan de bono',17000,'Dos sabores de helado, waffle, queso, chantilly, cereza, galleta minichips, barquillo y salsa al gusto.','waffle-bono'),
+  I('waffle-nutella','Waffles','Waffle Nutella',17000,'Waffle tradicional acompañado de crema de avellanas, una bola de helado, fresas, banano, chips de chocolate, chantilly, cereza y salsa al gusto.','waffle-nutella'),
+  I('waffle-candy','Waffles','Waffle Candy',17000,'Un sabor de helado, chantilly, waffle, salsa al gusto, variedad de topping, masmelo y grageas de colores.','waffle-candy'),
+  I('brownie','Waffles','Brownie con helado',16000,'Un sabor de helado, brownie, chantilly, cereza, fresa, salsa al gusto y topping.','brownie'),
+
+  I('salpicon-super','Salpicones','Salpicón súper especial',16000,'Dos sabores de helado, mezcla de salpicón, queso, chantilly, barquillo, salsa, topping al gusto y cereza.','salpicon-super'),
+  I('salpicon-especial','Salpicones','Salpicón especial',10500,'Un sabor de helado, mezcla de salpicón, leche condensada y barquillo.','salpicon-especial'),
+  I('salpicon-grande','Salpicones','Salpicón grande sin helado',8500,'Mezcla de salpicón en presentación grande, sin helado.','salpicon-especial'),
+  I('salpicon-peq-h','Salpicones','Salpicón pequeño con helado',7500,'Mezcla de salpicón en presentación pequeña, con helado.','salpicon-especial'),
+  I('salpicon-peq','Salpicones','Salpicón pequeño sin helado',5500,'Mezcla de salpicón en presentación pequeña, sin helado.','salpicon-especial'),
+  I('banana-split','Salpicones','Banana Split',15000,'Tres sabores de helado, salsa al gusto, queso, banano, fresa, cereza, barquillo, chantilly y lluvia de chocolate.','banana-split'),
+
+  I('ensalada-super','Ensaladas','Ensalada de frutas súper especial',21000,'Dos sabores de helado, acompañado de salsa, chantilly, variedad de fruta, crema de leche, leche condensada y barquillo.','ensalada-super'),
+  I('ensalada-especial','Ensaladas','Ensalada de frutas especial',16000,'Un sabor de helado, variedad de fruta, crema de leche, queso, barquillo y leche condensada.','ensalada-especial'),
+  I('ensalada-sencilla','Ensaladas','Ensalada de frutas sencilla',12000,'Un sabor de helado acompañado de salsa, fresa, mango, manzana, papaya, banano y barquillo.','ensalada-sencilla'),
+
+  I('fresas-grande','Fresas con crema','Fresas con crema grande',17500,'Un sabor de helado, chantilly, fresa, crema pastelera, chips de chocolate, chocodiscos, barquillo y salsa al gusto.','fresas-grande'),
+  I('fresas-mediana','Fresas con crema','Fresas con crema mediana',14500,'Un sabor de helado, fresa, chantilly, crema pastelera, salsa de chocolate, barquillo y chips de chocolate.','fresas-mediana'),
+
+  I('pinocho','Infantiles','Pinocho',9000,'Postre infantil con figura de helado.','pinocho'),
+  I('munequito','Infantiles','Muñequito de nieve',9000,'Postre infantil con figura de helado.','munequito'),
+  I('mickey','Infantiles','Mickey',9000,'Postre infantil con figura de helado.','mickey'),
+  I('peppa','Infantiles','Peppa Pig',9000,'Postre infantil con figura de helado.','peppa'),
+
+  I('malteada-especial','Malteadas','Malteada especial',17000,'Tres sabores de helado, nutella, chantilly, galleta waffer, salsa al gusto, lluvia de chocolate, chocmelo, galleta minichips, barquillo y chips de chocolate.','malteada-especial','Especial'),
+  I('malteada-sencilla','Malteadas','Malteada sencilla',8000,'Nuestra malteada clásica, cremosa y fría.','malteada-sencilla'),
+
+  I('oblea-sencilla','Obleas y solteritas','Oblea sencilla',2300,'Con salsas a elección.','oblea'),
+  I('oblea-queso','Obleas y solteritas','Oblea con queso',4300,'Oblea con queso y salsas a elección.','oblea'),
+  I('oblea-completa','Obleas y solteritas','Oblea completa',6300,'Crema de leche, chantilly, queso y salsas.','oblea'),
+  I('oblea-fresas','Obleas y solteritas','Oblea con fresas',8000,'Crema de leche, trozos de fresa, queso y salsas.','oblea'),
+  I('solterita-sencilla','Obleas y solteritas','Solterita sencilla',1800,'La solterita de siempre.','solterita'),
+  I('solterita-chantilly','Obleas y solteritas','Solterita con chantilly',3800,'Solterita con chantilly.','solterita'),
+  I('solterita-queso','Obleas y solteritas','Solterita con queso',3800,'Solterita con queso.','solterita'),
+
+  I('michelada','Refrescantes','Michelada saborizada',9000,'Refrescante, para los días de calor.','refrescante'),
+  I('limonada','Refrescantes','Limonada',8000,'Limonada fría.','refrescante'),
+  I('jugo-agua','Refrescantes','Jugo natural en agua',5000,'Jugo natural preparado en agua.','refrescante'),
+  I('jugo-leche','Refrescantes','Jugo natural en leche',7000,'Jugo natural preparado en leche.','refrescante'),
+
+  I('ad-chantilly','Adiciones','Chantilly',4000,'Adición para tu helado o postre.','','','☁️'),
+  I('ad-queso','Adiciones','Queso',4000,'Adición para tu helado o postre.','','','🧀'),
+  I('ad-bola','Adiciones','Bola de helado',2500,'Una bola extra de tu sabor favorito.','','','🍨'),
+  I('ad-fresas','Adiciones','Fresas',4000,'Adición para tu helado o postre.','','','🍓'),
+  I('ad-duraznos','Adiciones','Duraznos',4000,'Adición para tu helado o postre.','','','🍑'),
+  I('ad-banano','Adiciones','Banano',1600,'Adición para tu helado o postre.','','','🍌')
+];
+/* Precios por número de bolas (según la carta). Los vasos de 3 bolas están escritos a mano en la carta: revisar. */
+const VESS = {
+  vaso:     {n:'Vaso',      max:3, prices:[3200,6000,8800]},
+  concha:   {n:'Concha',    max:3, prices:[5000,7500,9500]},
+  cono:     {n:'Cono',      max:2, prices:[3200,6000]},
+  cucurucho:{n:'Cucurucho', max:3, prices:[4500,7500,10000]}
+};
+const prod = id=>PRODUCTS.find(p=>p.id===id);
+const photo = p=>p&&p.img?`img/menu/${p.img}.jpg`:'';
+
+/* Antojo del día según la fase de la luna */
+const PHASES = [
+  ['🌑','Luna nueva','copa-oreo'],['🌒','Luna creciente','copa-queso'],['🌓','Cuarto creciente','waffle-nutella'],['🌔','Gibosa creciente','fresas-grande'],
+  ['🌕','Luna llena','copa-super-luna'],['🌖','Gibosa menguante','waffle-candy'],['🌗','Cuarto menguante','ensalada-super'],['🌘','Luna menguante','malteada-especial']
+];
+function moonIdx(d=new Date()){
+  const syn=29.530588853, ref=Date.UTC(2000,0,6,18,14);
+  let age=((d.getTime()-ref)/864e5)%syn; if(age<0)age+=syn;
+  return Math.floor(age/syn*8+.5)%8;
+}
+
+/* =========================================================
+   ESTADO (solo en el navegador de cada cliente)
+   ========================================================= */
+const LS = {
+  get(k,def){try{const v=localStorage.getItem(k);return v==null?def:JSON.parse(v)}catch(e){return def}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let cart = LS.get('lunas.cart.v2',[]);          // {k,name,emoji,img,price,qty,note}
+let favs = LS.get('lunas.favs.v2',[]);
+let club = LS.get('lunas.club.v1',{});          // { '3001234567': {orders,lunas,redeemed,name} }
+let me   = LS.get('lunas.me.v1',{});            // {phone,name}
+let phone = me.phone||'';
+let filterCat = 'Todos', query = '';
+let mode = 'Domicilio';
+
+/* ---------- utilidades ---------- */
+const $ = s=>document.querySelector(s);
+const money = n=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(n);
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touchOnly = matchMedia('(hover:none)').matches;
+const digits = s=>{let d=String(s||'').replace(/\D/g,'');if(d.length===12&&d.startsWith('57'))d=d.slice(2);return d};
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;$('#toasts').appendChild(t);setTimeout(()=>t.remove(),2600)}
+function ymd(off){const x=new Date(Date.now()+off*864e5);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
+function waLink(text){return 'https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(text)}
+function phoneFmt(p){return p.length===10?`${p.slice(0,3)} ${p.slice(3,6)} ${p.slice(6)}`:p}
+
+function confetti(x,y,n=28){
+  if(reduceMotion)return;
+  const cols=['#e9018b','#46c6f5','#ff6fc0','#ffffff','#ffd84a','#b39dfa'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('i');c.className='confetti';
+    c.style.left=x+'px';c.style.top=y+'px';c.style.background=cols[i%cols.length];
+    document.body.appendChild(c);
+    const a=Math.random()*Math.PI*2, v=80+Math.random()*180;
+    c.animate([{transform:'translate(0,0) rotate(0)',opacity:1},
+      {transform:`translate(${Math.cos(a)*v}px,${Math.sin(a)*v+160}px) rotate(${Math.random()*720}deg)`,opacity:0}],
+      {duration:900+Math.random()*700,easing:'cubic-bezier(.2,.7,.4,1)'}).onfinish=()=>c.remove();
+  }
+}
+const centerOf = el=>{const r=el.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2]};
+
+/* =========================================================
+   CABECERA / HERO
+   ========================================================= */
+function openStatus(){
+  const pill=$('#openPill');
+  if(CONFIG.abre==null||CONFIG.cierra==null){pill.textContent='💬 Pide por WhatsApp · '+phoneFmt(CONFIG.whatsapp.slice(2));return}
+  const h=new Date().getHours(), open=h>=CONFIG.abre&&h<CONFIG.cierra;
+  const fmt=x=>(x%12||12)+(x<12?' am':' pm');
+  pill.textContent = open ? `🟢 Abierto ahora · hasta las ${fmt(CONFIG.cierra)}` : `🌙 Cerrado ahora · abrimos a las ${fmt(CONFIG.abre)}`;
+}
+function setupMoon(){
+  const [e,name,id]=PHASES[moonIdx()], p=prod(id);
+  $('#moonEmoji').textContent=e;
+  $('#moonPhase').textContent=`Hoy: ${name} · antojo lunar`;
+  $('#moonFlavor').textContent=p.name;
+  $('#moonChip').onclick=ev=>{addCart(id);confetti(ev.clientX,ev.clientY)};
+}
+function setupMarquee(){
+  const items=['🌙 Copas','🧇 Waffles','🍓 Fresas con crema','🥤 Malteadas','🍧 Salpicones','🥗 Ensaladas de frutas','🧒 Infantiles','🍦 Conos y cucuruchos','🍹 Refrescantes','🫓 Obleas'];
+  const html=items.map(i=>`<span>${i}</span><span>✦</span>`).join('');
+  $('#marq').innerHTML=html+html;
+}
+function setupHeroFx(){
+  const logo=$('#logoBig');
+  logo.addEventListener('click',e=>{
+    logo.classList.remove('spin');void logo.offsetWidth;logo.classList.add('spin');
+    confetti(e.clientX,e.clientY,40);
+  });
+  if(reduceMotion||touchOnly)return;
+  const wrap=$('#logoWrap');
+  $('#inicio').addEventListener('mousemove',e=>{
+    const r=e.currentTarget.getBoundingClientRect();
+    wrap.style.setProperty('--px',((e.clientX-r.left)/r.width-.5)*-26+'px');
+    wrap.style.setProperty('--py',((e.clientY-r.top)/r.height-.5)*-26+'px');
+  });
+}
+
+/* =========================================================
+   MENÚ
+   ========================================================= */
+function renderChips(){
+  const all=['Todos',...CATS,'Favoritos'];
+  $('#chips').innerHTML=all.map(c=>`<button class="chip ${c===filterCat?'active':''}" data-c="${c}">${c==='Favoritos'?'❤️ Favoritos':c}</button>`).join('');
+}
+function cardHTML(p,i){
+  const img=photo(p);
+  const pic=`<div class="pic"><span class="emo">${p.emoji}</span>${img?`<img src="${img}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">`:''}</div>`;
+  const fav=`<button class="fav ${favs.includes(p.id)?'on':''}" data-fav="${p.id}" aria-label="Favorito">❤️</button>`;
+  if(p.vessel){
+    const v=VESS[p.vessel];
+    return `<article class="product" style="animation-delay:${i*40}ms">${fav}${pic}<h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p>
+      <div class="ptable">${v.prices.map((x,k)=>`<span>${k+1} ${k?'bolas':'bola'}<b>${money(x)}</b></span>`).join('')}</div>
+      <button class="btn btn-primary btn-sm" style="width:100%" data-arm="${p.vessel}">🌙 Armar el mío</button></article>`;
+  }
+  return `<article class="product" style="animation-delay:${i*40}ms">
+      ${p.tag?`<span class="tag">${esc(p.tag)}</span>`:''}${fav}${pic}
+      <h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p>
+      <div class="row"><span class="price">${money(p.price)}</span><button class="btn btn-primary btn-sm" data-add="${p.id}">＋ Agregar</button></div></article>`;
+}
+function renderGrid(){
+  const q=query.trim().toLowerCase();
+  const list=PRODUCTS.filter(p=>
+    (filterCat==='Todos'||(filterCat==='Favoritos'?favs.includes(p.id):p.cat===filterCat)) &&
+    (!q||(p.name+' '+p.desc+' '+p.cat).toLowerCase().includes(q)));
+  $('#grid').innerHTML=list.map(cardHTML).join('') || `<p class="empty">${filterCat==='Favoritos'?'Aún no tienes favoritos. Toca el ❤️ de un producto.':'No encontramos eso en el menú 🍨'}</p>`;
+}
+function setupMenu(){
+  renderChips();renderGrid();
+  $('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(!b)return;filterCat=b.dataset.c;renderChips();renderGrid()});
+  $('#q').addEventListener('input',e=>{query=e.target.value;renderGrid()});
+  $('#grid').addEventListener('click',e=>{
+    const a=e.target.closest('[data-add]'),f=e.target.closest('[data-fav]'),m=e.target.closest('[data-arm]');
+    if(a){addCart(a.dataset.add);const[x,y]=centerOf(a);confetti(x,y,16)}
+    if(m){setVessel(m.dataset.arm);$('#arma').scrollIntoView()}
+    if(f){const id=f.dataset.fav;favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];LS.set('lunas.favs.v2',favs);f.classList.toggle('on');if(filterCat==='Favoritos')renderGrid()}
+  });
+  // inclinación 3D al pasar el mouse
+  if(reduceMotion||touchOnly)return;
+  const g=$('#grid');
+  g.addEventListener('mousemove',e=>{
+    const c=e.target.closest('.product');if(!c)return;
+    const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    c.style.transform=`perspective(700px) rotateY(${x*9}deg) rotateX(${-y*9}deg) translateY(-6px)`;
+  });
+  g.addEventListener('mouseout',e=>{const c=e.target.closest('.product');if(c&&!c.contains(e.relatedTarget))c.style.transform=''});
+}
+
+/* =========================================================
+   ARMA TU HELADO — dibujo en SVG
+   ========================================================= */
+const FL=[
+  {id:'van',n:'Vainilla', c:'#f7e4a6',tex:'#7a5a1e',k:'dot'},
+  {id:'cho',n:'Chocolate',c:'#6e3f2c',tex:'#2e140b',k:'chip'},
+  {id:'fre',n:'Fresa',    c:'#ff7fa8',tex:'#d7335f',k:'dot'},
+  {id:'mor',n:'Mora',     c:'#8e4bb8',tex:'#4d2070',k:'dot'},
+  {id:'are',n:'Arequipe', c:'#d9994d',tex:'#9c5f20',k:'none'},
+  {id:'mar',n:'Maracuyá', c:'#ffd84a',tex:'#3b2a10',k:'dot'},
+  {id:'coc',n:'Coco',     c:'#fdf6ec',tex:'#cdb98f',k:'flake'},
+  {id:'ore',n:'Oreo',     c:'#d4cfdc',tex:'#2e2a33',k:'chunk'},
+  {id:'men',n:'Menta',    c:'#7fe0c8',tex:'#3a2418',k:'chip'},
+  {id:'chi',n:'Chicle',   c:'#5fc8f5',tex:'#ffffff',k:'dot'}
+];
+const SAU=[
+  {id:'none',n:'Sin salsa',c:null},
+  {id:'cho', n:'Chocolate',c:'#3b1a10'},
+  {id:'fre', n:'Fresa',    c:'#e0245e'},
+  {id:'car', n:'Caramelo', c:'#c97a1f'},
+  {id:'mor', n:'Mora',     c:'#5b2a86'},
+  {id:'lec', n:'Leche condensada',c:'#fff0cf'}
+];
+const ADD=[
+  {id:'cha',n:'Chantilly',e:'☁️',p:4000},{id:'que',n:'Queso',e:'🧀',p:4000},{id:'fre',n:'Fresas',e:'🍓',p:4000},
+  {id:'dur',n:'Duraznos',e:'🍑',p:4000},{id:'ban',n:'Banano',e:'🍌',p:1600}
+];
+const VY={cucurucho:262,cono:322,concha:352,vaso:330};         // y donde empieza cada envase en el dibujo
+const VH={cucurucho:182,cono:136,concha:112,vaso:132};         // alto aprox. (para los iconos pequeños)
+let B={v:'cucurucho',sc:[],sa:'none',ad:[],last:-1};
+
+function shade(hex,amt){
+  const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;
+  const f=amt<0?0:255,p=Math.abs(amt);
+  return `rgb(${Math.round((f-r)*p+r)},${Math.round((f-g)*p+g)},${Math.round((f-b)*p+b)})`;
+}
+function lcg(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>(s=s*16807%2147483647)/2147483647}
+
+/* degradados + patrones, una sola vez */
+function setupDefs(){
+  let d='';
+  FL.forEach(f=>{d+=`<radialGradient id="sg-${f.id}" cx="34%" cy="28%" r="85%"><stop offset="0" stop-color="${shade(f.c,.42)}"/><stop offset=".5" stop-color="${f.c}"/><stop offset="1" stop-color="${shade(f.c,-.3)}"/></radialGradient>`});
+  d+=`<radialGradient id="creamG" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e4dcee"/></radialGradient>
+  <radialGradient id="strG" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#ff6b6b"/><stop offset="1" stop-color="#c2162f"/></radialGradient>
+  <radialGradient id="durG" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#ffc766"/><stop offset="1" stop-color="#f28a1e"/></radialGradient>
+  <radialGradient id="cheG" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#ff6b6b"/><stop offset="1" stop-color="#a50f26"/></radialGradient>
+  <linearGradient id="coneShade" x1="0" x2="1"><stop offset="0" stop-color="#5a2e08" stop-opacity=".5"/><stop offset=".35" stop-color="#fff" stop-opacity=".18"/><stop offset=".7" stop-color="#5a2e08" stop-opacity=".05"/><stop offset="1" stop-color="#5a2e08" stop-opacity=".55"/></linearGradient>
+  <linearGradient id="cupG" x1="0" x2="1"><stop offset="0" stop-color="#e9e3f5"/><stop offset=".4" stop-color="#fff"/><stop offset="1" stop-color="#d6cdea"/></linearGradient>
+  <pattern id="pwaf" width="13" height="13" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="13" height="13" fill="#e8ad5e"/><path d="M0 0H13M0 0V13" stroke="#b97426" stroke-width="2"/></pattern>
+  <pattern id="pcono" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="#f0d29b"/><path d="M0 0V9" stroke="#caa062" stroke-width="1.6"/></pattern>
+  <pattern id="pwafer" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><rect width="8" height="8" fill="#d9a55e"/><path d="M0 0H8" stroke="#a9692a" stroke-width="2.4"/></pattern>`;
+  $('#gdefs').innerHTML=d;
+}
+
+function scoopPath(cx,cy,r,n=6){
+  const left=cx-r-4,right=cx+r+4,yb=cy+r*.42,w=(right-left)/n;
+  let d=`M${cx-r},${cy} A${r},${r} 0 0 1 ${cx+r},${cy} L${right},${yb}`;
+  for(let i=1;i<=n;i++)d+=` A${(w/2).toFixed(1)},${(w/2*1.1).toFixed(1)} 0 0 1 ${(right-i*w).toFixed(1)},${yb.toFixed(1)}`;
+  return d+' Z';
+}
+function texture(f,cx,cy,r,seed){
+  if(f.k==='none')return '';
+  const rnd=lcg(seed*97+f.id.charCodeAt(0)*13),n=f.k==='dot'?16:12;let s='';
+  for(let i=0;i<n;i++){
+    const a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*r*.82,x=cx+Math.cos(a)*d,y=cy-6+Math.sin(a)*d*.9;
+    if(f.k==='dot')s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(1.3+rnd()*1.2).toFixed(1)}" fill="${f.tex}" opacity=".55"/>`;
+    else if(f.k==='flake')s+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="3.4" ry="1.3" fill="${f.tex}" opacity=".6" transform="rotate(${(rnd()*180).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;
+    else s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(4+rnd()*4).toFixed(1)}" height="${(3+rnd()*3).toFixed(1)}" rx="1.4" fill="${f.tex}" opacity=".75" transform="rotate(${(rnd()*180).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;
+  }
+  return s;
+}
+function cherry(x,y){return `<g><path d="M${x},${y-6} q4,-16 14,-18" fill="none" stroke="#4f7a2a" stroke-width="2.2" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="9" fill="url(#cheG)"/><ellipse cx="${x-3}" cy="${y-3.5}" rx="3" ry="2" fill="#fff" opacity=".6"/></g>`}
+function strawberry(x,y,s,rot){
+  const seeds=[[-4,-2],[3,-4],[0,3],[-3,7],[4,2]].map(([a,b])=>`<ellipse cx="${a}" cy="${b}" rx=".9" ry="1.4" fill="#ffe9a8"/>`).join('');
+  return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})"><path d="M0,-10 C10,-10 14,-2 0,15 C-14,-2 -10,-10 0,-10Z" fill="url(#strG)"/>${seeds}<path d="M-7,-10 l7,-6 l7,6 l-3.5,2 l-3.5,-3.5 l-3.5,3.5z" fill="#2f9e4f"/></g>`;
+}
+function peach(x,y,rot){return `<g transform="translate(${x} ${y}) rotate(${rot})"><path d="M-16,0 Q0,-26 16,0 Q0,-9 -16,0Z" fill="url(#durG)" stroke="#e07d12" stroke-width="1"/><path d="M-10,-2 Q0,-14 10,-2" fill="none" stroke="#ffe3a8" stroke-width="2" stroke-linecap="round" opacity=".8"/></g>`}
+function bananaSlice(x,y){return `<g transform="translate(${x} ${y})"><ellipse rx="14" ry="9" fill="#ffe27a" stroke="#e1b21f" stroke-width="1.5"/><ellipse rx="7" ry="4.2" fill="#fff3b8"/><circle r="1.2" fill="#a77a14"/></g>`}
+
+function vesselMarkup(v,Yt){
+  const cx=150;
+  if(v==='cucurucho')return `<path d="M${cx-54},${Yt} L${cx+54},${Yt} L${cx},${Yt+182} Z" fill="url(#pwaf)"/><path d="M${cx-54},${Yt} L${cx+54},${Yt} L${cx},${Yt+182} Z" fill="url(#coneShade)"/><rect x="${cx-60}" y="${Yt-8}" width="120" height="18" rx="9" fill="#c98a3d"/><rect x="${cx-60}" y="${Yt-8}" width="120" height="7" rx="4" fill="#e8b36a" opacity=".7"/>`;
+  if(v==='cono')return `<path d="M${cx-48},${Yt} L${cx+48},${Yt} L${cx+32},${Yt+128} Q${cx},${Yt+138} ${cx-32},${Yt+128} Z" fill="url(#pcono)"/><path d="M${cx-48},${Yt} L${cx+48},${Yt} L${cx+32},${Yt+128} Q${cx},${Yt+138} ${cx-32},${Yt+128} Z" fill="url(#coneShade)"/><rect x="${cx-53}" y="${Yt-8}" width="106" height="16" rx="8" fill="#d7ac6c"/>`;
+  if(v==='concha'){let sc='';for(let i=0;i<9;i++)sc+=`<circle cx="${cx-80+i*20}" cy="${Yt+1}" r="10" fill="#e8ad5e" stroke="#b97426" stroke-width="1.5"/>`;
+    return `<path d="M${cx-88},${Yt+2} Q${cx},${Yt-8} ${cx+88},${Yt+2} Q${cx+82},${Yt+72} ${cx+48},${Yt+96} Q${cx},${Yt+114} ${cx-48},${Yt+96} Q${cx-82},${Yt+72} ${cx-88},${Yt+2} Z" fill="url(#pwaf)"/><path d="M${cx-88},${Yt+2} Q${cx},${Yt-8} ${cx+88},${Yt+2} Q${cx+82},${Yt+72} ${cx+48},${Yt+96} Q${cx},${Yt+114} ${cx-48},${Yt+96} Q${cx-82},${Yt+72} ${cx-88},${Yt+2} Z" fill="url(#coneShade)"/>${sc}<ellipse cx="${cx}" cy="${Yt+112}" rx="40" ry="6" fill="#a8671e"/>`}
+  // vaso
+  const xl=dy=>100+16*dy/120, y1=36,y2=68;
+  return `<path d="M${cx-52},${Yt} L${cx+52},${Yt} L${cx+36},${Yt+122} Q${cx},${Yt+132} ${cx-36},${Yt+122} Z" fill="url(#cupG)"/>
+    <path d="M${xl(y1)+0},${Yt+y1} L${300-xl(y1)},${Yt+y1} L${300-xl(y2)},${Yt+y2} L${xl(y2)},${Yt+y2} Z" fill="#ff8fc9"/>
+    <path d="M${cx-40},${Yt+8} L${cx-32},${Yt+112}" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+    <rect x="${cx-57}" y="${Yt-7}" width="114" height="14" rx="7" fill="#f1ecfa"/>`;
+}
+
+function scoopMarkup(fid,i,cy,r,isTop,isNew){
+  const f=FL.find(x=>x.id===fid),cx=150,sp=scoopPath(cx,cy,r),sc=SAU.find(s=>s.id===B.sa);
+  let s=`<clipPath id="cp${i}"><path d="${sp}"/></clipPath><g class="${isNew?'drop':''}">`;
+  s+=`<path d="${sp}" fill="url(#sg-${f.id})"/>`;
+  s+=`<g clip-path="url(#cp${i})">${texture(f,cx,cy,r,i+1)}`;
+  s+=`<path d="M${cx-r},${cy+r*.18} Q${cx},${cy+r*.55} ${cx+r},${cy+r*.18}" fill="none" stroke="${shade(f.c,-.32)}" stroke-width="3" opacity=".3"/></g>`;
+  s+=`<ellipse cx="${cx-r*.38}" cy="${cy-r*.46}" rx="${r*.26}" ry="${r*.13}" fill="#fff" opacity=".42" transform="rotate(-28 ${cx-r*.38} ${cy-r*.46})"/>`;
+  if(isTop)s+=toppingsMarkup(cx,cy,r,i);
+  return s+'</g>';
+}
+function toppingsMarkup(cx,cy,r,i){
+  const A=B.ad,top=cy-r,sc=SAU.find(s=>s.id===B.sa);let out='';
+  if(A.includes('cha')){
+    out+=`<g transform="rotate(16 ${cx+20} ${top+14})"><rect x="${cx+14}" y="${top-70}" width="12" height="88" rx="6" fill="url(#pwafer)" stroke="#8f5a22" stroke-width=".8"/></g>`;
+    out+=`<g transform="rotate(34 ${cx+30} ${top+14})"><rect x="${cx+25}" y="${top-62}" width="12" height="80" rx="6" fill="url(#pwafer)" stroke="#8f5a22" stroke-width=".8"/></g>`;
+  }
+  if(sc.c){
+    const y0=cy-r*.12,dr=[[-46,14],[-27,34],[-8,12],[12,30],[32,16],[50,24]];
+    out+=`<g clip-path="url(#cp${i})"><rect x="${cx-r-8}" y="${cy-r-10}" width="${2*r+16}" height="${y0-(cy-r-10)}" fill="${sc.c}"/>`+dr.map(([dx,l])=>`<rect x="${cx+dx-6}" y="${y0-10}" width="12" height="${l+10}" rx="6" fill="${sc.c}"/>`).join('')+`<ellipse cx="${cx-r*.42}" cy="${cy-r*.62}" rx="13" ry="5.5" fill="#fff" opacity=".3" transform="rotate(-25 ${cx-r*.42} ${cy-r*.62})"/></g>`;
+  }
+  if(A.includes('que')){
+    const rnd=lcg(11);let q='',q2='';
+    for(let k=0;k<44;k++){
+      const y=top+8+rnd()*(r*.66),lim=Math.sqrt(Math.max(0,r*r-(y-cy)*(y-cy)))*.92,x=cx+(rnd()*2-1)*lim,dx=(rnd()*2-1)*7,dy=2+rnd()*5;
+      q+=`<path d="M${x.toFixed(1)},${y.toFixed(1)} l${dx.toFixed(1)},${dy.toFixed(1)}" stroke="#e8d391" stroke-width="3.6" stroke-linecap="round"/>`;
+      q2+=`<path d="M${x.toFixed(1)},${(y-.8).toFixed(1)} l${dx.toFixed(1)},${dy.toFixed(1)}" stroke="#fff6d6" stroke-width="2.2" stroke-linecap="round"/>`;
+    }
+    out+=q+q2;
+  }
+  if(A.includes('dur'))out+=peach(cx-46,cy-r*.3,-30)+peach(cx+44,cy-r*.15,25)+peach(cx-8,top+4,-6);
+  if(A.includes('ban'))out+=bananaSlice(cx-34,top+18)+bananaSlice(cx+34,top+22)+bananaSlice(cx+2,cy-r*.15);
+  if(A.includes('fre'))out+=strawberry(cx-52,cy+2,1.35,-22)+strawberry(cx+54,cy+6,1.3,24)+strawberry(cx-24,top+2,1.2,-12);
+  if(A.includes('cha')){
+    const y=top+6;
+    out+=[[0,0,21],[-26,9,16],[26,9,16],[-13,-14,15],[13,-14,15],[0,-27,13]].map(([dx,dy,rr])=>`<circle cx="${cx+dx}" cy="${y+dy}" r="${rr}" fill="url(#creamG)"/>`).join('')
+       +`<path d="M${cx-16},${y-6} q9,-11 20,-1 q-8,-5 -13,7" fill="none" stroke="#dcd2ea" stroke-width="2" stroke-linecap="round"/>`+cherry(cx,y-36);
+  }
+  return out;
+}
+function drawing(){
+  const Yt=VY[B.v];let s=vesselMarkup(B.v,Yt);
+  B.sc.forEach((fid,i)=>{s+=scoopMarkup(fid,i,Yt-24-i*56,56,i===B.sc.length-1,i===B.last)});
+  return `<svg viewBox="0 0 300 520" role="img" aria-label="Vista de tu helado">${s}</svg>`;
+}
+function miniScoop(f){return `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="${scoopPath(32,26,22,5)}" fill="url(#sg-${f.id})"/><ellipse cx="22" cy="14" rx="6" ry="3" fill="#fff" opacity=".45" transform="rotate(-28 22 14)"/></svg>`}
+function miniVessel(v){const Yt=VY[v];return `<svg viewBox="40 ${Yt-14} 220 ${VH[v]+22}" aria-hidden="true">${vesselMarkup(v,Yt)}</svg>`}
+
+function bPrice(){
+  const ves=VESS[B.v];
+  const base=B.sc.length?ves.prices[B.sc.length-1]:0;
+  return {base,add:B.ad.reduce((a,t)=>a+ADD.find(x=>x.id===t).p,0),get total(){return this.base+this.add}};
+}
+function bDesc(){
+  const ves=VESS[B.v],p=[`${ves.n} de ${B.sc.length} ${B.sc.length>1?'bolas':'bola'}`,B.sc.map(i=>FL.find(f=>f.id===i).n).join(' + ')];
+  const s=SAU.find(s=>s.id===B.sa);if(s.c)p.push('Salsa de '+s.n.toLowerCase());
+  if(B.ad.length)p.push('Con '+B.ad.map(t=>ADD.find(x=>x.id===t).n.toLowerCase()).join(', '));
+  return p.join(' · ');
+}
+function setVessel(v){B.v=v;B.sc=B.sc.slice(0,VESS[v].max);B.last=-1;renderBuilder()}
+function renderBuilder(){
+  const ves=VESS[B.v],pr=bPrice(),n=B.sc.length;
+  $('#builder').innerHTML=`
+  <div class="pv"><div class="pv-stage"><span class="pv-moon">🌙</span><span class="pv-star" style="left:14%;top:22%">✦</span><span class="pv-star" style="left:8%;top:58%;animation-delay:-1s">✦</span><span class="pv-star" style="right:12%;top:50%;animation-delay:-2s">✦</span>${drawing()}</div>
+    <div class="pv-label">${n?esc(ves.n)+' de '+n+(n>1?' bolas':' bola'):'Tu helado está vacío'}</div>
+    <div class="pv-sub">${n?esc(B.sc.map(i=>FL.find(f=>f.id===i).n).join(' + ')):'Elige un sabor para empezar 👇'}</div></div>
+  <div class="panel-b">
+    <div class="cs"><h3><i>1</i>Elige tu envase</h3><p class="sub">Los precios cambian según el envase y las bolas.</p>
+      <div class="vgrid">${Object.keys(VESS).map(k=>`<button class="vopt ${B.v===k?'on':''}" data-v="${k}">${miniVessel(k)}<b>${VESS[k].n}</b><small>desde ${money(VESS[k].prices[0])}</small></button>`).join('')}</div></div>
+    <div class="cs"><h3><i>2</i>Elige tus sabores</h3><p class="sub">${esc(ves.n)}: hasta ${ves.max} bolas · toca un sabor para sumarlo</p>
+      <div class="fgrid">${FL.map(f=>{const c=B.sc.filter(x=>x===f.id).length;return `<button class="fopt ${c?'on':''}" data-f="${f.id}">${c?`<span class="n">${c}</span>`:''}${miniScoop(f)}${f.n}</button>`}).join('')}</div>
+      <div class="chosen">${n?B.sc.map((id,i)=>`<span>${i+1}. ${FL.find(f=>f.id===id).n}<button data-rm="${i}" aria-label="Quitar">✕</button></span>`).join('')+`<span style="background:transparent;color:#fff;padding:0"><em style="color:var(--blue)">${money(pr.base)}</em></span>`:'<span class="ph">Aún no eliges ninguna bola</span>'}</div></div>
+    <div class="cs"><h3><i>3</i>Salsa</h3><p class="sub">Va sobre la última bola.</p>
+      <div class="opts">${SAU.map(s=>`<button class="opt ${B.sa===s.id?'on':''}" data-s="${s.id}">${s.c?`<span class="dot" style="--bg:${s.c}"></span>`:'🚫'}${s.n}</button>`).join('')}</div></div>
+    <div class="cs"><h3><i>4</i>Adiciones</h3><p class="sub">Sube de nivel tu helado.</p>
+      <div class="opts">${ADD.map(t=>`<button class="opt ${B.ad.includes(t.id)?'on':''}" data-t="${t.id}">${t.e} ${t.n} <small>+${money(t.p)}</small></button>`).join('')}</div></div>
+    <div class="b-total">
+      <div class="b-lines"><div><span>${n?esc(ves.n)+' · '+n+(n>1?' bolas':' bola'):'Envase y bolas'}</span><span>${money(pr.base)}</span></div><div><span>Adiciones</span><span>${money(pr.add)}</span></div></div>
+      <div class="b-row"><div><small>Tu creación</small><b>${money(pr.total)}</b></div>
+      <div class="b-actions"><button class="btn btn-sm btn-glass" data-act="rand">🎲 Sorpréndeme</button><button class="btn btn-sm btn-glass" data-act="reset">↺ Reiniciar</button>
+      <button class="btn btn-primary" data-act="add" ${n?'':'disabled'}>Agregar al pedido 🛒</button></div></div></div>
+  </div>`;
+  B.last=-1;
+}
+function setupBuilder(){
+  setupDefs();renderBuilder();
+  $('#builder').addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    const d=b.dataset;
+    if(d.v){return setVessel(d.v)}
+    else if(d.f){if(B.sc.length>=VESS[B.v].max){toast(`El ${VESS[B.v].n.toLowerCase()} lleva hasta ${VESS[B.v].max} bolas 🍨`);return}B.sc.push(d.f);B.last=B.sc.length-1}
+    else if(d.rm!=null){B.sc.splice(+d.rm,1)}
+    else if(d.s){B.sa=d.s}
+    else if(d.t){B.ad=B.ad.includes(d.t)?B.ad.filter(x=>x!==d.t):[...B.ad,d.t]}
+    else if(d.act==='reset'){B={v:B.v,sc:[],sa:'none',ad:[],last:-1}}
+    else if(d.act==='rand'){
+      const pick=a=>a[Math.floor(Math.random()*a.length)],v=pick(Object.keys(VESS)),n=1+Math.floor(Math.random()*VESS[v].max);
+      B={v,sc:Array.from({length:n},()=>pick(FL).id),sa:pick(SAU).id,ad:ADD.filter(()=>Math.random()<.3).map(t=>t.id),last:n-1};
+    }
+    else if(d.act==='add'){
+      if(!B.sc.length)return;
+      const desc=bDesc(),ves=VESS[B.v];
+      addItem({k:'c:'+desc,name:'Helado armado',emoji:'🍨',img:'',price:bPrice().total,note:desc});
+      const[x,y]=centerOf(b);confetti(x,y,30);
+      return;
+    }
+    renderBuilder();
+  });
+}
+
+/* =========================================================
+   CLUB LAS LUNAS
+   ========================================================= */
+const recOf = p=>p?club[p]||null:null;
+const rewardPending = r=>!!r&&Math.floor((r.lunas||0)/CLUB.meta)>(r.redeemed||0);
+function saveClub(){LS.set('lunas.club.v1',club);LS.set('lunas.me.v1',me)}
+function renderClub(){
+  $('#minCompra').textContent=money(CLUB.minCompra);
+  $('#premioTxt').textContent=`Al completar ${CLUB.meta} lunas ganas: ${CLUB.premio} gratis en tu siguiente pedido.`;
+  const r=recOf(phone),lunas=r?r.lunas||0:0,pend=rewardPending(r),prog=pend?CLUB.meta:lunas%CLUB.meta;
+  let slots='';for(let i=0;i<CLUB.meta;i++)slots+=`<div class="moon ${i<prog?'on':''}"><span>${i<prog?'🌕':'🌑'}</span></div>`;
+  const first=!r||!r.orders;
+  $('#clubCard').innerHTML=`<div class="top"><img src="img/logo.png" alt=""><div><b>Tarjeta de lunas</b><small>${phone?'Celular '+phoneFmt(phone):'Ingresa tu celular para ver tu progreso'}</small></div></div>
+    <div class="moons">${slots}</div>
+    <div class="cstat">${prog} de ${CLUB.meta} lunas</div>
+    <div class="cmsg">${pend?'¡Luna llena! 🌕 Tu premio está listo para tu próximo pedido.':first?`Aún no tienes compras. ¡Tu primera compra por la página tiene ${CLUB.primeraPct}% de descuento!`:`Te faltan ${CLUB.meta-prog} ${CLUB.meta-prog>1?'lunas':'luna'} para tu premio.`}</div>
+    <div class="reward ${pend?'show':''}">🎁 Premio disponible: <b>${esc(CLUB.premio)}</b> gratis. Se agrega solo a tu próximo pedido.</div>
+    <form class="cform" id="clubForm"><input id="clubPhone" inputmode="tel" placeholder="Tu celular (10 dígitos)" value="${esc(phone)}" aria-label="Tu celular"><button class="btn btn-white btn-sm">Ver mi tarjeta</button></form>`;
+  $('#clubForm').onsubmit=e=>{
+    e.preventDefault();const d=digits($('#clubPhone').value);
+    if(d.length!==10){toast('Escribe un celular de 10 dígitos');return}
+    phone=d;me={...me,phone:d};saveClub();renderClub();if(isCartOpen())openCart();toast('Tarjeta cargada 🌙');
+  };
+}
+
+/* =========================================================
+   CARRITO
+   ========================================================= */
+function saveCart(){LS.set('lunas.cart.v2',cart);updateBadge()}
+function updateBadge(){
+  const n=cart.reduce((a,i)=>a+i.qty,0), b=$('#cartCount');
+  b.textContent=n;b.classList.toggle('hidden',!n);
+  const btn=$('#cartBtn');btn.classList.remove('bump');void btn.offsetWidth;if(n)btn.classList.add('bump');
+}
+function addItem(it){
+  const f=cart.find(i=>i.k===it.k); f?f.qty++:cart.push({...it,qty:1});
+  saveCart();toast(it.emoji+' '+it.name+' agregado');if(isCartOpen())openCart();
+}
+function addCart(id){const p=prod(id);if(p.vessel){setVessel(p.vessel);$('#arma').scrollIntoView();return}addItem({k:'p:'+id,name:p.name,emoji:p.emoji,img:p.img,price:p.price,note:''})}
+function chQty(k,d){
+  const it=cart.find(i=>i.k===k);if(!it)return;
+  it.qty+=d;if(it.qty<=0)cart=cart.filter(i=>i.k!==k);
+  saveCart();openCart();
+}
+function totals(){
+  const sub=cart.reduce((a,i)=>a+i.price*i.qty,0);
+  const r=recOf(phone),first=!r||!r.orders;
+  const disc=first?Math.round(sub*CLUB.primeraPct/100):0;
+  const ship=sub>0&&mode==='Domicilio'&&typeof CONFIG.domicilio==='number'?CONFIG.domicilio:0;
+  return {sub,first,disc,ship,total:sub-disc+ship,reward:sub>0&&rewardPending(r),earns:sub>=CLUB.minCompra,lunas:r?r.lunas||0:0};
+}
+function summaryHTML(t){
+  const falta=CLUB.minCompra-t.sub;
+  return `<div class="sum-row"><span>Subtotal</span><span>${money(t.sub)}</span></div>
+    ${t.first&&t.sub?`<div class="sum-row ok"><span>🎉 Primera compra −${CLUB.primeraPct}%</span><span>−${money(t.disc)}</span></div>`:''}
+    <div class="sum-row"><span>Domicilio</span><span>${mode!=='Domicilio'?'—':typeof CONFIG.domicilio==='number'?money(t.ship):'Se confirma por WhatsApp'}</span></div>
+    <div class="sum-row total"><span>Total</span><span>${money(t.total)}</span></div>
+    ${t.reward?`<div class="note">🎁 <b>Premio Luna llena:</b> ${esc(CLUB.premio)} gratis incluido en este pedido.</div>`:''}
+    ${t.sub?`<div class="note">${t.earns?'🌙 Este pedido suma 1 luna a tu tarjeta.':`🌙 Te faltan ${money(falta)} para que este pedido sume una luna.`}</div>`:''}`;
+}
+const isCartOpen=()=>!!document.querySelector('.drawer');
+function closeAll(){document.querySelectorAll('.drawer,.modal').forEach(e=>e.remove());$('#overlay').classList.remove('show')}
+function openCart(){
+  const prev=document.querySelector('.drawer');
+  const t=totals();
+  const d=document.createElement('aside');d.className='drawer'+(prev?' show':'');
+  d.innerHTML=`<header><h3>Tu pedido 🛒</h3><button class="icon-btn" data-close aria-label="Cerrar">✕</button></header>
+  <div class="body">${cart.length?cart.map(i=>`
+    <div class="cart-item"><div class="e">${i.img?`<img src="img/menu/${i.img}.jpg" alt="">`:i.emoji}</div>
+    <div class="info"><b>${esc(i.name)}</b>${i.note?`<small>${esc(i.note)}</small>`:''}<small>${money(i.price)}</small></div>
+    <div class="qty"><button data-q="${esc(i.k)}" data-d="-1" aria-label="Menos">−</button><b>${i.qty}</b><button data-q="${esc(i.k)}" data-d="1" aria-label="Más">＋</button></div></div>`).join('')
+    :'<p class="empty">Tu carrito está vacío 🍨<br>¡Agrega algo delicioso!</p>'}</div>
+  <div class="foot-d">${summaryHTML(t)}
+    <button class="btn btn-wa" style="width:100%;margin-top:10px" ${cart.length?'':'disabled'} data-checkout>Finalizar pedido por WhatsApp</button>
+  </div>`;
+  if(prev)prev.replaceWith(d);else document.body.appendChild(d);
+  if(!prev)requestAnimationFrame(()=>d.classList.add('show'));
+  $('#overlay').classList.add('show');
+  d.addEventListener('click',e=>{
+    const q=e.target.closest('[data-q]');
+    if(q)return chQty(q.dataset.q,+q.dataset.d);
+    if(e.target.closest('[data-close]'))return closeAll();
+    if(e.target.closest('[data-checkout]'))return openCheckout();
+  });
+}
+function openCheckout(){
+  document.querySelectorAll('.modal').forEach(e=>e.remove());
+  const m=document.createElement('div');m.className='modal';
+  m.innerHTML=`<div role="dialog" aria-label="Finalizar pedido"><h3>Casi listo 🎉</h3>
+    <div class="field"><label for="co_name">Tu nombre</label><input id="co_name" placeholder="Ej. Laura Gómez" autocomplete="name" value="${esc(me.name||'')}"></div>
+    <div class="field"><label for="co_tel">Tu celular (para tu tarjeta del Club)</label><input id="co_tel" inputmode="tel" placeholder="300 000 0000" autocomplete="tel" value="${esc(phone)}"></div>
+    <div class="field"><label>Modalidad</label><div class="seg"><button type="button" data-m="Domicilio" class="${mode==='Domicilio'?'on':''}">🛵 Domicilio</button><button type="button" data-m="Local" class="${mode==='Local'?'on':''}">🏪 Recoger en el local</button></div></div>
+    <div class="field" id="co_addr_w" style="${mode==='Domicilio'?'':'display:none'}"><label for="co_addr">Dirección de entrega</label><input id="co_addr" placeholder="Calle, número, barrio" autocomplete="street-address"></div>
+    <div class="field"><label for="co_note">Notas (opcional)</label><textarea id="co_note" rows="2" placeholder="Indicaciones, alergias…"></textarea></div>
+    <div id="co_sum"></div>
+    <div class="modal-actions"><button class="btn btn-ghost" data-cancel>Cancelar</button><button class="btn btn-wa" data-send>Enviar por WhatsApp 💬</button></div></div>`;
+  document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('show'));
+  const refresh=()=>{$('#co_sum').innerHTML=summaryHTML(totals())};refresh();
+  m.addEventListener('input',e=>{if(e.target.id==='co_tel'){const d=digits(e.target.value);phone=d.length===10?d:'';refresh()}});
+  m.addEventListener('click',e=>{
+    if(e.target===m)return m.remove();
+    const mb=e.target.closest('[data-m]');
+    if(mb){mode=mb.dataset.m;m.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b===mb));$('#co_addr_w').style.display=mode==='Domicilio'?'':'none';refresh();openCart()}
+    if(e.target.closest('[data-cancel]'))m.remove();
+    if(e.target.closest('[data-send]'))sendOrder();
+  });
+}
+function sendOrder(){
+  const name=$('#co_name').value.trim(),tel=digits($('#co_tel').value),addr=$('#co_addr').value.trim(),note=$('#co_note').value.trim();
+  if(!name){toast('Escribe tu nombre');return}
+  if(tel.length!==10){toast('Escribe tu celular de 10 dígitos');return}
+  if(mode==='Domicilio'&&!addr){toast('Escribe la dirección de entrega');return}
+  phone=tel;
+  const t=totals(),r=recOf(tel);
+  const lines=cart.map(i=>`• ${i.qty} × ${i.name}${i.note?` (${i.note})`:''} — ${money(i.price*i.qty)}`);
+  const lunasNuevas=(t.lunas)+(t.earns?1:0);
+  const msg=[`🌙 *Pedido web · Helados Las Lunas*`,'',`👤 ${name}`,`📱 ${phoneFmt(tel)}`,`🛵 ${mode}${mode==='Domicilio'?' · '+addr:''}`,'',...lines,
+    t.reward?`🎁 *PREMIO CLUB (gratis):* ${CLUB.premio}`:null,'',
+    `Subtotal: ${money(t.sub)}`,t.first?`🎉 Primera compra −${CLUB.primeraPct}%: −${money(t.disc)}`:null,
+    mode==='Domicilio'?(typeof CONFIG.domicilio==='number'?`Domicilio: ${money(t.ship)}`:'Domicilio: por confirmar'):null,`*Total: ${money(t.total)}*`,'',
+    `🌙 Club Las Lunas: ${t.first?'cliente nuevo (primera compra)':'lunas antes de este pedido: '+t.lunas}${t.earns?' · este pedido suma 1 luna':''}`,
+    note?`📝 ${note}`:null].filter(x=>x!==null).join('\n');
+  // actualiza la tarjeta del club
+  const rec=r||{orders:0,lunas:0,redeemed:0};
+  if(t.reward)rec.redeemed=(rec.redeemed||0)+1;
+  rec.orders=(rec.orders||0)+1;if(t.earns)rec.lunas=(rec.lunas||0)+1;rec.name=name;
+  club[tel]=rec;me={phone:tel,name};saveClub();
+  window.open(waLink(msg),'_blank','noopener');
+  cart=[];saveCart();closeAll();renderClub();
+  toast(t.earns?'¡Pedido listo para enviar y sumaste una luna! 🌙':'¡Pedido listo para enviar! 🍨');confetti(innerWidth/2,innerHeight/2,60);
+}
+
+/* =========================================================
+   UBICACIÓN
+   ========================================================= */
+function setupMap(){
+  const {lat,lng}=CONFIG;
+  $('#goMaps').href=`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+  $('#goWaze').href=`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`;
+  $('#viewMaps').href=CONFIG.mapsCorto;
+  $('#pinLink').href=CONFIG.mapsCorto;
+  $('#mapFrame').src=`https://maps.google.com/maps?q=${lat},${lng}&z=17&output=embed`;
+  if(CONFIG.direccion)$('#dirTxt').textContent=CONFIG.direccion+'. ¿Prefieres quedarte en casa? Te llevamos el helado.';
+}
+
+/* =========================================================
+   RESERVAS
+   ========================================================= */
+function setupReservas(){
+  const d=$('#rs_d');d.min=ymd(0);d.value=ymd(1);
+  $('#resForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=id=>$('#'+id).value.trim();
+    const dt=new Date(v('rs_d')+'T00:00').toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'});
+    const msg=[`📅 *Reserva web · Helados Las Lunas*`,`Nombre: ${v('rs_n')}`,`Teléfono: ${v('rs_t')}`,`Fecha: ${dt} a las ${v('rs_h')}`,`Personas: ${v('rs_p')}`,`Ocasión: ${v('rs_o')}`,v('rs_x')?`Notas: ${v('rs_x')}`:null].filter(Boolean).join('\n');
+    window.open(waLink(msg),'_blank','noopener');
+    const[x,y]=centerOf(e.submitter||e.target);confetti(x,y,50);toast('¡Reserva lista para enviar! 🌙');
+  });
+}
+
+/* =========================================================
+   PIE, NAV, EFECTOS
+   ========================================================= */
+function setupFooter(){
+  $('#yr').textContent=new Date().getFullYear();
+  $('#footInfo').innerHTML=(CONFIG.horarioTexto?`<p>🕒 ${esc(CONFIG.horarioTexto)}</p>`:'')+(CONFIG.direccion?`<p>📍 ${esc(CONFIG.direccion)}</p>`:'')+`<a href="${esc(CONFIG.mapsCorto)}" target="_blank" rel="noopener">📍 Ver ubicación en el mapa</a>`;
+  $('#footLinks').innerHTML=`<a href="${waLink('Hola, quiero más información 🌙')}" target="_blank" rel="noopener">💬 WhatsApp ${phoneFmt(CONFIG.whatsapp.slice(2))}</a>
+    <a href="${esc(CONFIG.instagram)}" target="_blank" rel="noopener">📸 @heladoslaslunas</a>
+    <a href="${esc(CONFIG.facebook)}" target="_blank" rel="noopener">👍 Helados Las Lunas</a>`;
+  $('#waFab').href=waLink('Hola, quiero más información 🌙');
+}
+function setupNav(){
+  const links=$('#links');
+  $('#menuBtn').onclick=()=>links.classList.toggle('open');
+  links.addEventListener('click',e=>{if(e.target.tagName==='A')links.classList.remove('open')});
+  $('#cartBtn').onclick=openCart;
+  $('#overlay').onclick=closeAll;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=document.querySelector('.modal');m?m.remove():closeAll()}});
+  const fab=$('#fab');fab.onclick=()=>scrollTo({top:0});
+  const secs=[...document.querySelectorAll('section[id]')], navA=[...links.querySelectorAll('a')];
+  addEventListener('scroll',()=>{
+    fab.classList.toggle('show',scrollY>700);
+    let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<140)cur='#'+s.id});
+    navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')===cur));
+  },{passive:true});
+}
+function setupReveal(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)||reduceMotion){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+  els.forEach(e=>io.observe(e));
+}
+function setupSparkles(){
+  if(reduceMotion||touchOnly)return;
+  let last=0;
+  addEventListener('pointermove',e=>{
+    const n=performance.now();if(n-last<70)return;last=n;
+    const s=document.createElement('span');s.className='spark';s.textContent=Math.random()<.5?'✦':'✧';
+    s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.color=Math.random()<.5?'#e9018b':'#46c6f5';
+    document.body.appendChild(s);
+    s.animate([{transform:'translate(0,0) scale(1)',opacity:.9},{transform:`translate(${Math.random()*30-15}px,${20+Math.random()*20}px) scale(.2) rotate(120deg)`,opacity:0}],{duration:800}).onfinish=()=>s.remove();
+  });
+}
+
+/* ---------- Arranque ---------- */
+openStatus();setInterval(openStatus,60000);
+setupMoon();setupMarquee();setupHeroFx();
+setupMenu();setupBuilder();renderClub();setupMap();setupReservas();
+setupFooter();setupNav();setupReveal();setupSparkles();updateBadge();
+</script>
+</body>
+</html>
